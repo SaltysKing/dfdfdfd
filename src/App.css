@@ -1,6 +1,11 @@
 .App {
   text-align: center;
 }
+body {
+  background-color: #f3f6fa;
+  line-height: 1.2;
+  font-size: 14px;
+}
 
 .App-logo {
   height: 40vmin;
@@ -13,7 +18,7 @@
   }
 }
 
-.App-header {
+/* .App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -22,10 +27,155 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
-}
+} */
 
 .App-link {
   color: #61dafb;
+}
+.main {
+  background-color: #fff;
+  margin: 0 auto;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  margin: 10vw auto;
+  max-width: 965px;
+  padding: 3vw;
+  box-shadow: 3px 3px 0 0 rgba(85, 150, 246, 0.16);
+  border-radius: 9px;
+}
+.main-inner {
+  margin-top: 2rem;
+}
+p {
+  margin: 0;
+}
+h4 {
+  margin: 0;
+}
+.bottom-info .col {
+  font-family: Ubuntu;
+  font-size: 22px;
+  color: #1c1c1c;
+  letter-spacing: -0.75px;
+  margin-top: 2rem;
+}
+.bottom-info h4 {
+  font-weight: 400;
+  font-family: Ubuntu;
+  font-size: 18px;
+  color: #888888;
+  letter-spacing: -0.62px;
+  margin-bottom: 0.9rem;
+}
+
+.row {
+  display: flex;
+}
+.col {
+  flex: 0 0 50%;
+}
+
+.currentTime {
+  font-family: Ubuntu;
+  font-size: 18px;
+  color: #888888;
+  letter-spacing: -0.62px;
+}
+.cityTitle {
+  font-family: Ubuntu-Bold;
+  font-size: 24px;
+  color: #1c1c1c;
+  letter-spacing: -0.82px;
+  line-height: 1;
+}
+.currentForecast {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+.temp-wrapper {
+  display: flex;
+  align-items: center;
+}
+.currentForecast img {
+  margin-right: 1.5rem;
+}
+.currentForecast .deg {
+  margin-top: 5px;
+}
+.currentForecast .sup {
+  font-family: Ubuntu-Bold;
+  font-size: 20px;
+  color: #1c1c1c;
+  letter-spacing: -0.68px;
+  margin-top: 6px;
+}
+.main-inner {
+  display: flex;
+}
+.left-widget {
+  flex: 0 0 30%;
+}
+.right-widget {
+  flex: 0 0 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* justify-content: space-evenly; */
+
+  display: flex;
+  flex-direction: column;
+}
+.forecast-tabs {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.right-widget .day {
+  font-family: Ubuntu-Bold;
+  font-size: 14px;
+  color: #1c1c1c;
+  letter-spacing: -0.48px;
+  text-align: center;
+}
+.right-widget .humidity {
+  font-family: Ubuntu;
+  font-size: 14px;
+  color: #1c1c1c;
+  letter-spacing: -0.48px;
+  text-align: center;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+ul li {
+  margin-bottom: 10px;
+}
+.temp-big {
+  font-family: Ubuntu-Bold;
+  font-size: 58px;
+  color: #1c1c1c;
+  letter-spacing: -1.98px;
+}
+.feelsLike {
+  font-family: Ubuntu-Medium;
+  font-size: 21px;
+  color: #1c1c1c;
+  letter-spacing: 0;
+  text-align: center;
+}
+.textForecast {
+  font-family: Ubuntu-Bold;
+  font-size: 31px;
+  color: #1c1c1c;
+  letter-spacing: -1.06px;
 }
 
 @keyframes App-logo-spin {
