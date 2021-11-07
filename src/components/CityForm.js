@@ -21,7 +21,7 @@ const CityForm = (props) => {
             id="city"
             type="text"
             ref={cityInputRef}
-            placeholder="London"
+            placeholder="Atlanta"
           />
         </div>
       </form>

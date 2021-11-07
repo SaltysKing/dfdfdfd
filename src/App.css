@@ -1,10 +1,19 @@
 .App {
   text-align: center;
+  padding: 15px;
 }
 body {
   background-color: #f3f6fa;
   line-height: 1.2;
   font-size: 14px;
+  font-family: "Ubuntu", sans-serif;
+}
+.repo {
+  float: right;
+  margin-right: 15px;
+  margin-bottom: 15px;
+  color: #522BFF;
+  text-decoration: none;
 }
 
 .App-logo {
@@ -18,27 +27,11 @@ body {
   }
 }
 
-/* .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-} */
-
-.App-link {
-  color: #61dafb;
-}
 .main {
   background-color: #fff;
   margin: 0 auto;
-  min-height: 80vh;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   justify-content: center;
   font-size: calc(10px + 2vmin);
   margin: 10vw auto;
@@ -57,7 +50,6 @@ h4 {
   margin: 0;
 }
 .bottom-info .col {
-  font-family: Ubuntu;
   font-size: 22px;
   color: #1c1c1c;
   letter-spacing: -0.75px;
@@ -65,7 +57,6 @@ h4 {
 }
 .bottom-info h4 {
   font-weight: 400;
-  font-family: Ubuntu;
   font-size: 18px;
   color: #888888;
   letter-spacing: -0.62px;
@@ -80,13 +71,12 @@ h4 {
 }
 
 .currentTime {
-  font-family: Ubuntu;
   font-size: 18px;
   color: #888888;
   letter-spacing: -0.62px;
 }
 .cityTitle {
-  font-family: Ubuntu-Bold;
+  font-weight: 700;
   font-size: 24px;
   color: #1c1c1c;
   letter-spacing: -0.82px;
@@ -110,7 +100,7 @@ h4 {
   margin-top: 5px;
 }
 .currentForecast .sup {
-  font-family: Ubuntu-Bold;
+  font-weight: 700;
   font-size: 20px;
   color: #1c1c1c;
   letter-spacing: -0.68px;
@@ -127,7 +117,6 @@ h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* justify-content: space-evenly; */
 
   display: flex;
   flex-direction: column;
@@ -138,14 +127,13 @@ h4 {
   width: 100%;
 }
 .right-widget .day {
-  font-family: Ubuntu-Bold;
+  font-weight: 700;
   font-size: 14px;
   color: #1c1c1c;
   letter-spacing: -0.48px;
   text-align: center;
 }
 .right-widget .humidity {
-  font-family: Ubuntu;
   font-size: 14px;
   color: #1c1c1c;
   letter-spacing: -0.48px;
@@ -159,20 +147,20 @@ ul li {
   margin-bottom: 10px;
 }
 .temp-big {
-  font-family: Ubuntu-Bold;
+  font-weight: 700;
   font-size: 58px;
   color: #1c1c1c;
   letter-spacing: -1.98px;
 }
 .feelsLike {
-  font-family: Ubuntu-Medium;
+  font-weight: 500;
   font-size: 21px;
   color: #1c1c1c;
   letter-spacing: 0;
   text-align: center;
 }
 .textForecast {
-  font-family: Ubuntu-Bold;
+  font-weight: 700;
   font-size: 31px;
   color: #1c1c1c;
   letter-spacing: -1.06px;

@@ -1,4 +1,15 @@
-# Getting Started with Create React App
+# Weather Forecast App using React.js and Chart.js
+
+To install run:
+### `npm install`
+Signup for a free api key at https://openweathermap.org and rename the `secrets_sample.json` file.  Add the API key to the  `openWeatherAPI` value.
+Run `npm start` and you're good to go!
+
+## Upcoming features:
+- Add all icon states for Descriptive Forecasts (currently it's just the cloudy icon)
+- Add forecast chart view by days.  I'll add in the active state on the day cards below the chart.
+- Add responsiveness (currently tested for desktop)
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

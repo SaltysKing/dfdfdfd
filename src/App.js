@@ -12,40 +12,26 @@ function App() {
   const [forecast, setForecast] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [city, setCity] = useState("London, GB");
+  const [city, setCity] = useState("Atlanta, USA");
+  const [chart, setChart] = useState({
+    chartLabels: ["Now"],
+    chartData: [],
+  });
 
-  const chart = {
-    chartLabels: [
-      // '',
-      'Morning',
-      'Afternoon',
-      'Evening',
-      'Overnight',
-      // '',
-    ],
-    chartData: [
-      100,
-      40,
-      50,
-      70,
-      60,
-      40,
-    ]
-  }
-
-  // const openWeatherAPI = "";
+  const activeDay = 1;
 
   const fetchForecastHandler = useCallback(async () => {
     setIsLoading(true);
     setError(null);
+
     try {
-      const response = await fetch(
+      const currentData = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${keys.openWeatherAPI}&units=imperial`
+      ).then((response) => response.json());
+      console.log(currentData);
+      const forecastData = await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${keys.openWeatherAPI}&units=imperial`
-      );
-      if (!response.ok) {
-        throw new Error("Something went wrong!");
-      }
-      const data = await response.json();
+      ).then((response) => response.json());
 
       const c = new Date();
       //5:05 PM, Mon, Nov 23, 2020
@@ -63,8 +49,11 @@ function App() {
         return result;
       }
       const timeUpdated = new Date();
+
       let day = [];
       let totalDays = 3;
+      let time = [];
+      let temp = [];
       let currentDate = timeUpdated.toLocaleString("en-US", {
         day: "numeric",
       });
@@ -75,20 +64,36 @@ function App() {
       });
       let transformedDays = [];
       let tempData = [];
+      let j = 0;
+      // add in our current time and temp
+      temp.push(Math.trunc(currentData.main.temp));
+      time.push("Now");
+      console.log(temp);
+      for (let i = 0; i < forecastData.list.length; i++) {
+        const fData = forecastData.list[i];
 
-      for (let i = 0; i < data.list.length; i++) {
-        const forecastData = data.list[i];
-
-        const t = new Date(parseInt(forecastData.dt * 1000));
+        const t = new Date(parseInt(fData.dt * 1000));
         const humanDateFormat = t.toLocaleString("en-US", {
           month: "short",
           day: "numeric",
         });
+        const day = t.toLocaleString("en-US", {
+          day: "numeric",
+        });
+        const hour = t.toLocaleString("en-US", {
+          hour: "numeric",
+        });
         currentDate = t.toLocaleString("en-US", {
           day: "numeric",
         });
+        if (timeUpdated < t && j <= 6) {
+          // get only 7 items
+          time.push(hour);
+          temp.push(Math.trunc(fData.main.temp));
+          j++;
+        }
 
-        if (currentDate == nextDate) {
+        if (currentDate === nextDate) {
           transformedDays.push({ day: prevDate, forecast: tempData });
           nextDate = addDays(t, 1);
           nextDate = nextDate.toLocaleString("en-US", {
@@ -99,22 +104,39 @@ function App() {
         // add new day entry
         tempData.push({
           time: humanDateFormat,
-          temp: Math.trunc(forecastData.main.temp),
-          feels_like: Math.trunc(forecastData.main.feels_like),
-          pressure: Math.trunc(forecastData.main.pressure),
-          humidity: forecastData.main.humidity,
+          hour: hour,
+          temp: Math.trunc(fData.main.temp),
+          feels_like: Math.trunc(fData.main.feels_like),
+          pressure: Math.trunc(fData.main.pressure),
+          humidity: fData.main.humidity,
         });
         prevDate = humanDateFormat;
       }
 
       const transformedForecast = [
         {
-          name: data.city.name,
-          currentTime: currentTime,
+          name: currentData.name,
+          currentTime: currentData.time,
+          feels_like: Math.trunc(currentData.main.feels_like),
+          temp: Math.trunc(currentData.main.temp),
+          humidity: Math.trunc(currentData.main.humidity),
+          wind: Math.trunc(currentData.wind.speed),
           days: transformedDays,
         },
       ];
+      console.log(time);
+      console.log(temp);
+      setChart({
+        chartLabels: time,
+        chartData: temp,
+        chartMin: Math.min(...temp),
+        chartMax: Math.max(...temp)
+      });
       setForecast(transformedForecast);
+
+      if (!currentData.ok || !forecastData.ok) {
+        throw new Error("Something went wrong!");
+      }
     } catch (error) {
       setError(error.message);
     }
@@ -148,7 +170,8 @@ function App() {
             <img src={cloudyLarge} alt="Cloudy" />
             <div className="temp-wrapper">
               <span className="temp-big">
-                {forecast[0].days[0].forecast[0].temp}
+                {/* this should be the top level temp  */}
+                {forecast[0].temp}
               </span>
               <div className="sup">
                 <span className="deg">&deg;</span> F
@@ -157,39 +180,39 @@ function App() {
           </div>
           <div className="textForecast">Cloudy</div>
           <div className="feelsLike">
-            Feels Like {forecast[0].days[0].forecast[0].feels_like}&deg;
+            Feels Like {forecast[0].feels_like}&deg;
           </div>
           <div className="row bottom-info">
             <div className="col">
               <h4>Humidity</h4>
-              45%
+              {forecast[0].humidity}%
             </div>
             <div className="col">
               <h4>Wind Speed</h4>
-              19.2 km/j
+              {forecast[0].wind} mph
             </div>
           </div>
         </div>
         <div className="right-widget">
-          <ForecastGraph chartLabels={chart.chartLabels} chartData={chart.chartData} />
-          {/* {state.chartData.length && state.chartLabels.length ? (
-            <ForecastGraph {...state} />
-          ) : null} */}
+          <ForecastGraph
+            chartLabels={chart.chartLabels}
+            chartData={chart.chartData}
+            chartMin={chart.chartMin}
+            chartMax={chart.chartMax}
+          />
           <div className="forecast-tabs">
-          {forecast[0].days.map((day, i) => (
-            <ul>
-              <li className="day">{day.day}</li>
-              <li className="text-forecast">
-                <img src={cloudyWhite} alt="Cloudy" />
-              </li>
-              {/* <li>Temperature: {day.temp}&deg;</li> */}
-              {/* First Humidity for now */}
-              <li className="humidity">
-                Humidity: {day.forecast[0].humidity}%
-              </li>
-              {/* <li>Pressure: {day.pressure}</li> */}
-            </ul>
-          ))}
+            {forecast[0].days.map((day, i) => (
+              <ul>
+                <li className="day">{day.day}</li>
+                <li className="text-forecast">
+                  <img src={cloudyWhite} alt="Cloudy" />
+                </li>
+                {/* First Humidity for now */}
+                <li className="humidity">
+                  Humidity: {day.forecast[0].humidity}%
+                </li>
+              </ul>
+            ))}
           </div>
         </div>
       </section>

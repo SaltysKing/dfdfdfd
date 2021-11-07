@@ -1,82 +1,83 @@
 import React from "react";
-import styles from "./ForecastGraph.module.css";
 import { Line } from "react-chartjs-2";
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-
-const options = {
-  // responsive: true,
-  // maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      display: false,
-    },
-    tooltip: {
-      enabled: false
-    },
-    datalabels: {
-      color: '#522BFF',
-      align: 'top',
-      offset: 15,
-      font: {
-        size: "23.63",
-        family: "Ubuntu",
-        weight: "600",
-        letterSpacing: "-0.81"
-      },
-      formatter: function(value, ctx) {
-        return ctx.active
-          ? 'index'
-          :  (value) + '°F';
-      },
-    }
-  },
-  elements: {
-    line: {
-      tension: 0.4,
-    },
-  },
-  scales: {
-    // offset: 10,
-    x: {
-      gridLines: {
-        offsetGridLines: true
-      },
-      offset: true,
-      ticks: {
-        // labelOffset: 20,
-        color: "#1C1C1C",
-        align: "center",
-        // padding: 15,
-        font: {
-          size: "18",
-          family: "Ubuntu",
-          weight: "300",
-        },
-        // callback: function (val, index) {
-        //   // Hide the first line and label of every dataset
-        //   return index !== 0 ? this.getLabelForValue(val) : "";
-        // },
-      },
-      grid: {
-        borderWidth: "2",
-        borderDash: [8, 4],
-        color: "#CDC2FF",
-        drawBorder: false,
-        lineWidth: 2,
-        tickLength: 0,
-      },
-    },
-    y: {
-      ticks: { display: false },
-      grid: {
-        display: false,
-        drawBorder: false,
-      },
-    },
-  },
-};
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 const ForecastGraph = (props) => {
+  const options = {
+    // responsive: true,
+    // maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        enabled: false,
+      },
+      datalabels: {
+        color: "#522BFF",
+        align: "top",
+        offset: 15,
+        font: {
+          size: "23.63",
+          family: "Ubuntu",
+          weight: "600",
+          letterSpacing: "-0.81",
+        },
+        display: function (context, i) {
+          return (
+            context.dataIndex > 0 &&
+            context.dataIndex < context.dataset.data.length - 1
+          );
+        },
+        formatter: function (value, ctx) {
+          return ctx.active ? value + "°F" : value + "°F";
+        },
+      },
+    },
+    elements: {
+      line: {
+        tension: 0.4,
+      },
+    },
+    scales: {
+      x: {
+        position: "top",
+        gridLines: {
+          offsetGridLines: true,
+        },
+        ticks: {
+          color: "#1C1C1C",
+          align: "center",
+          font: {
+            size: "18",
+            family: "Ubuntu",
+            weight: "300",
+          },
+        },
+        grid: {
+          borderWidth: "2",
+          borderDash: [8, 4],
+          color: "#CDC2FF",
+          drawBorder: false,
+          lineWidth: 2,
+          tickLength: 0,
+          offset: true,
+        },
+      },
+      y: {
+        suggestedMin: props.chartMin - 5,
+        suggestedMax: props.chartMax +10,
+        ticks: {
+          display: false,
+          beginAtZero: true,
+        },
+        grid: {
+          display: false,
+          drawBorder: false,
+        },
+      },
+    },
+  };
   return (
     <Line
       width="572"
@@ -97,8 +98,6 @@ const ForecastGraph = (props) => {
       }}
     />
   );
-
-  // return <canvas id="myChart" width="572" height="162"></canvas>;
 };
 
 export default ForecastGraph;
