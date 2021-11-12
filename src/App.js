@@ -1,14 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-// import { Carousel } from "react-responsive-carousel";
 
 import CityForm from "./components/CityForm";
 import ForecastGraph from "./components/ForecastGraph";
+import ForecastTabs from "./components/ForecastTabs";
 
 import cloudyLarge from "./images/cloudy-large.svg";
-import cloudyWhite from "./images/cloudy-white.svg";
-import cloudyPurpleActive from "./images/cloudy-purple-active.svg";
 import keys from "./secrets.json";
 import "./App.css";
 
@@ -20,6 +18,8 @@ function App() {
   const [chart, setChart] = useState({
     chartLabels: ["Now"],
     chartData: [],
+    chartMin: '',
+    chartMax: ''
   });
   const [isMobile, setIsMobile] = useState(false);
   const activeDay = 1;
@@ -33,6 +33,10 @@ function App() {
     }
   };
 
+  const tabChangeHandler = (active) => {
+    // update data for chart
+    updateChart(active);
+  }
   // create an event listener
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -134,14 +138,20 @@ function App() {
           humidity: Math.trunc(currentData.main.humidity),
           wind: Math.trunc(currentData.wind.speed),
           days: transformedDays,
+          current: {
+            chartLabels: time,
+            chartData: temp,
+            chartMin: Math.min(...temp),
+            chartMax: Math.max(...temp)
+          }
         },
       ];
-        setChart({
-          chartLabels: time,
-          chartData: temp,
-          chartMin: Math.min(...temp),
-          chartMax: Math.max(...temp),
-        });
+      setChart({
+        chartLabels: time,
+        chartData: temp,
+        chartMin: Math.min(...temp),
+        chartMax: Math.max(...temp),
+      });
 
       setForecast(transformedForecast);
 
@@ -159,6 +169,25 @@ function App() {
 
   const addCityHandler = (city) => {
     setCity(city);
+  };
+
+  const updateChart = (active) => {
+      if (active !== 0) {
+        const activeForecast = forecast[0].days[active].forecast;
+        let temp = activeForecast.map(day => {
+          return day.temp;
+        });
+        let hour = activeForecast.map(day => {
+          return day.hour;
+        });
+        setChart({chartLabels: hour,
+          chartData: temp,
+          chartMin: Math.min(temp),
+          chartMax: Math.max(temp)
+        });
+      } else {
+        setChart(forecast[0].current);
+      }
   };
 
   let content = <p>No forecast available.</p>;
@@ -214,25 +243,7 @@ function App() {
                 chartMax={chart.chartMax}
               />
             </div>
-            <div className="forecast-tabs">
-              {/* <Carousel showArrows={isMobile} showStatus={false} centerMode={false} thumbWidth={25} showThumbs={false} showIndicators={false}> */}
-                {forecast[0].days.slice(0, 4).map((day, i) => (
-                  <div className={`day-tab ${i === 0 ? " active" : ""}`}>
-                    <div className="day">{day.day}</div>
-                    <div className="text-forecast">
-                      <img
-                        src={i === 0 ? cloudyPurpleActive : cloudyWhite}
-                        alt="Cloudy"
-                      />
-                    </div>
-                    {/* First Humidity for now */}
-                    <div className="humidity">
-                      Humidity: {day.forecast[0].humidity}%
-                    </div>
-                  </div>
-                ))}
-              {/* </Carousel> */}
-            </div>
+            <ForecastTabs forecast={forecast[0]} onTabChange={tabChangeHandler} />
           </div>
         </div>
       </section>

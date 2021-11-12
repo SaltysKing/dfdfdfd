@@ -180,12 +180,13 @@ h4 {
 .right-widget {
   position: relative;
   width: 100%;
+
   display: flex;
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .right-widget-inner {
   width: 100%;
@@ -193,33 +194,13 @@ h4 {
 @media (min-width: 768px) {
   .right-widget {
     flex: 0 0 70%;
-    max-width: 70%;
+    max-width: 572px;
   }
   .right-widget-inner {
     padding-left: 10%;
   }
 }
 
-/* move these out eventually */
-.carousel .slide {
-  min-width: 25%;
-}
-.carousel .slide img {
-  width: initial;
-}
-.forecast-tabs {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-}
-.forecast-tabs .active {
-  background-image: linear-gradient(180deg, #522bff 0%, #890eff 100%);
-  border-radius: 4px;
-  color: #fff;
-}
-.forecast-tabs .day-tab.active > div {
-  color: #fff;
-}
 .right-widget .day {
   font-weight: 700;
   font-size: 14px;
@@ -233,27 +214,7 @@ h4 {
   letter-spacing: -0.48px;
   text-align: center;
 }
-.forecast-tabs .day-tab {
-  flex: 0 0 25%;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  margin-top: 20px;
-  margin-bottom: 0;
-}
-@media (min-width: 768px) {
-  .forecast-tabs .day-tab {
-    padding-top: 30px;
-    padding-bottom: 30px;
-    margin-top: 10px;
-  }
-}
 
-.day-tab {
-  padding: 0;
-}
-.day-tab > div {
-  margin-bottom: 10px;
-}
 .temp-big {
   font-weight: 700;
   font-size: 58px;

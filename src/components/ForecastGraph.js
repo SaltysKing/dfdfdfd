@@ -3,12 +3,14 @@ import { Line } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 
 const ForecastGraph = (props) => {
+  const {chartLabels,chartData,chartMin,chartMax} = props;
+  
   const options = {
     maintainAspectRatio: false,
     layout: {
       padding: {
         left: 20,
-        right: 0
+        right: 20
       },
     },
     plugins: {
@@ -73,8 +75,8 @@ const ForecastGraph = (props) => {
         },
       },
       y: {
-        suggestedMin: props.chartMin ? props.chartMin - 5 : 0,
-        suggestedMax: props.chartMax ? props.chartMax + 10 : 100,
+        suggestedMin: chartMin ? chartMin - 5 : 0,
+        suggestedMax: chartMax ? chartMax + 10 : 100,
         ticks: {
           display: false,
           beginAtZero: true,
@@ -93,10 +95,10 @@ const ForecastGraph = (props) => {
       options={options}
       plugins={[ChartDataLabels]}
       data={{
-        labels: props.chartLabels,
+        labels: chartLabels,
         datasets: [
           {
-            data: props.chartData,
+            data: chartData,
             label: "Temperature",
             borderColor: "#522BFF",
             fill: true,

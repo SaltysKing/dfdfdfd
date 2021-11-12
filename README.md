@@ -9,8 +9,6 @@ Run `npm start` and you're good to go!
 
 ## Upcoming features:
 - Add all icon states for Descriptive Forecasts (currently it's just the cloudy icon)
-- Add forecast chart view by days.  I'll add in the active state on the day cards below the chart.
-
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
