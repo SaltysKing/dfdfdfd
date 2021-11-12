@@ -4,8 +4,8 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 
 const ForecastGraph = (props) => {
   const options = {
-    // responsive: true,
-    // maintainAspectRatio: false,
+    responsive: true,
+    // maintainAspectRatio: true,
     plugins: {
       legend: {
         display: false,
@@ -40,14 +40,19 @@ const ForecastGraph = (props) => {
       },
     },
     scales: {
+      
       x: {
         position: "top",
         gridLines: {
           offsetGridLines: true,
         },
+        // point: {
+        //   color: "green",
+        // },
         ticks: {
           color: "#1C1C1C",
-          align: "center",
+          align: "left",
+          backdropPadding: "20",
           font: {
             size: "18",
             family: "Ubuntu",
@@ -65,8 +70,8 @@ const ForecastGraph = (props) => {
         },
       },
       y: {
-        suggestedMin: props.chartMin - 5,
-        suggestedMax: props.chartMax +10,
+        suggestedMin:  (props.chartMin) ? props.chartMin  - 5 : 0,
+        suggestedMax: (props.chartMax) ? props.chartMax +10 : 100,
         ticks: {
           display: false,
           beginAtZero: true,
@@ -93,6 +98,11 @@ const ForecastGraph = (props) => {
             borderColor: "#522BFF",
             fill: true,
             backgroundColor: "#EFECFF",
+            pointRadius: 7,
+            pointHoverRadius: 7.1,
+            pointBackgroundColor: '#522BFF',
+            pointBorderColor: "white",
+            pointBorderWidth: "3"
           },
         ],
       }}

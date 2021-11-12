@@ -1,10 +1,14 @@
 import React, { useState, useEffect, useCallback } from "react";
 
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+
 import CityForm from "./components/CityForm";
 import ForecastGraph from "./components/ForecastGraph";
 
 import cloudyLarge from "./images/cloudy-large.svg";
 import cloudyWhite from "./images/cloudy-white.svg";
+import cloudyPurpleActive from "./images/cloudy-purple-active.svg";
 import keys from "./secrets.json";
 import "./App.css";
 
@@ -17,8 +21,32 @@ function App() {
     chartLabels: ["Now"],
     chartData: [],
   });
+  const [isMobile, setIsMobile] = useState(false);
 
   const activeDay = 1;
+
+  //choose the screen size
+  const handleResize = () => {
+    if (window.innerWidth < 767) {
+      setIsMobile(true);
+    } else {
+      setIsMobile(false);
+    }
+    console.log('is mobile: ' + isMobile);
+    console.log(window.innerWidth);
+  };
+
+  // create an event listener
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    // return () => window.removeEventListener("resize", handleResize);
+  },[]);
+  // useEffect(() => {
+  //   console.log("triggered initial?");
+  //   handleResize();
+  // }, []);
 
   const fetchForecastHandler = useCallback(async () => {
     setIsLoading(true);
@@ -130,7 +158,7 @@ function App() {
         chartLabels: time,
         chartData: temp,
         chartMin: Math.min(...temp),
-        chartMax: Math.max(...temp)
+        chartMax: Math.max(...temp),
       });
       setForecast(transformedForecast);
 
@@ -194,25 +222,34 @@ function App() {
           </div>
         </div>
         <div className="right-widget">
-          <ForecastGraph
-            chartLabels={chart.chartLabels}
-            chartData={chart.chartData}
-            chartMin={chart.chartMin}
-            chartMax={chart.chartMax}
-          />
-          <div className="forecast-tabs">
-            {forecast[0].days.map((day, i) => (
-              <ul>
-                <li className="day">{day.day}</li>
-                <li className="text-forecast">
-                  <img src={cloudyWhite} alt="Cloudy" />
-                </li>
-                {/* First Humidity for now */}
-                <li className="humidity">
-                  Humidity: {day.forecast[0].humidity}%
-                </li>
-              </ul>
-            ))}
+          <div className="right-widget-inner">
+            <div className="chart-container">
+              <ForecastGraph
+                chartLabels={chart.chartLabels}
+                chartData={chart.chartData}
+                chartMin={chart.chartMin}
+                chartMax={chart.chartMax}
+              />
+            </div>
+            <div className="forecast-tabs">
+              {/* <Carousel showArrows={isMobile} showStatus={false} centerMode={false} thumbWidth={25} showThumbs={false} showIndicators={false}> */}
+                {forecast[0].days.slice(0, 4).map((day, i) => (
+                  <div className={`day-tab ${i === 0 ? " active" : ""}`}>
+                    <div className="day">{day.day}</div>
+                    <div className="text-forecast">
+                      <img
+                        src={i === 0 ? cloudyPurpleActive : cloudyWhite}
+                        alt="Cloudy"
+                      />
+                    </div>
+                    {/* First Humidity for now */}
+                    <div className="humidity">
+                      Humidity: {day.forecast[0].humidity}%
+                    </div>
+                  </div>
+                ))}
+              {/* </Carousel> */}
+            </div>
           </div>
         </div>
       </section>

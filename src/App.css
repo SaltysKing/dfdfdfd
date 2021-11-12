@@ -1,6 +1,30 @@
 .App {
   text-align: center;
-  padding: 15px;
+  /* padding: 15px; */
+  /* width: 100%; */
+}
+@media (min-width: 768px) {
+  .App {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+  }
+}
+.chart-container {
+  /* width: 100%; */
+  position: relative;
+  display: none;
+}
+@media (min-width:768px) {
+  .chart-container {
+    display: block;
+  }
 }
 body {
   background-color: #f3f6fa;
@@ -12,7 +36,7 @@ body {
   float: right;
   margin-right: 15px;
   margin-bottom: 15px;
-  color: #522BFF;
+  color: #522bff;
   text-decoration: none;
 }
 
@@ -26,22 +50,41 @@ body {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
 .main {
   background-color: #fff;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
-  margin: 10vw auto;
+  margin: 5px 15px;
   max-width: 965px;
-  padding: 3vw;
+  /* width: 100%; */
+  /* padding: 28px 15px;
+   */
+   padding: 15px 10px;
   box-shadow: 3px 3px 0 0 rgba(85, 150, 246, 0.16);
   border-radius: 9px;
 }
+
+@media (min-width: 768px) {
+  .main {
+    background-color: #fff;
+    margin: 0 auto;
+    margin: 10vw 15px;
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    margin: 10vw auto;
+    max-width: 965px;
+    padding: 38px 30px;
+    box-shadow: 3px 3px 0 0 rgba(85, 150, 246, 0.16);
+    border-radius: 9px;
+  }
+}
+
 .main-inner {
   margin-top: 2rem;
+  display: flex;
+  /* flex-wrap: wrap; */
 }
 p {
   margin: 0;
@@ -108,23 +151,58 @@ h4 {
 }
 .main-inner {
   display: flex;
+  flex-wrap: wrap;
 }
 .left-widget {
-  flex: 0 0 30%;
+  position: relative;
+  width: 100%;
+  margin-bottom: 22px;
+}
+@media (min-width: 768px) {
+  .left-widget {
+    flex: 0 0 30%;
+    max-width: 30%;
+    margin-bottom: 0px;
+  }
 }
 .right-widget {
-  flex: 0 0 70%;
+  position: relative;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-
   display: flex;
   flex-direction: column;
+}
+@media (min-width: 768px) {
+  .right-widget {
+    flex: 0 0 70%;
+    max-width: 70%;
+  }
+  .right-widget-inner {
+    padding-left: 10%;
+  }
+}
+
+/* move these out eventually */
+.carousel .slide {
+  min-width: 25%;
+}
+.carousel .slide img {
+  width: initial;
 }
 .forecast-tabs {
   display: flex;
   justify-content: space-evenly;
   width: 100%;
+}
+.forecast-tabs .active {
+  background-image: linear-gradient(180deg, #522bff 0%, #890eff 100%);
+  border-radius: 4px;
+  color: #fff;
+}
+.forecast-tabs .day-tab.active > div {
+  color: #fff;
 }
 .right-widget .day {
   font-weight: 700;
@@ -139,11 +217,25 @@ h4 {
   letter-spacing: -0.48px;
   text-align: center;
 }
-ul {
-  list-style: none;
+.forecast-tabs .day-tab {
+  flex: 0 0 25%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+@media (min-width: 768px) {
+  .forecast-tabs .day-tab {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-top: 10px;
+  }
+}
+
+.day-tab {
   padding: 0;
 }
-ul li {
+.day-tab > div {
   margin-bottom: 10px;
 }
 .temp-big {
