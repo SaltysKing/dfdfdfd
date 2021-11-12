@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
+// import { Carousel } from "react-responsive-carousel";
 
 import CityForm from "./components/CityForm";
 import ForecastGraph from "./components/ForecastGraph";
@@ -22,7 +22,6 @@ function App() {
     chartData: [],
   });
   const [isMobile, setIsMobile] = useState(false);
-
   const activeDay = 1;
 
   //choose the screen size
@@ -32,21 +31,13 @@ function App() {
     } else {
       setIsMobile(false);
     }
-    console.log('is mobile: ' + isMobile);
-    console.log(window.innerWidth);
   };
 
   // create an event listener
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     handleResize();
-
-    // return () => window.removeEventListener("resize", handleResize);
   },[]);
-  // useEffect(() => {
-  //   console.log("triggered initial?");
-  //   handleResize();
-  // }, []);
 
   const fetchForecastHandler = useCallback(async () => {
     setIsLoading(true);
@@ -56,7 +47,6 @@ function App() {
       const currentData = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${keys.openWeatherAPI}&units=imperial`
       ).then((response) => response.json());
-      console.log(currentData);
       const forecastData = await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${keys.openWeatherAPI}&units=imperial`
       ).then((response) => response.json());
@@ -78,8 +68,6 @@ function App() {
       }
       const timeUpdated = new Date();
 
-      let day = [];
-      let totalDays = 3;
       let time = [];
       let temp = [];
       let currentDate = timeUpdated.toLocaleString("en-US", {
@@ -96,16 +84,12 @@ function App() {
       // add in our current time and temp
       temp.push(Math.trunc(currentData.main.temp));
       time.push("Now");
-      console.log(temp);
       for (let i = 0; i < forecastData.list.length; i++) {
         const fData = forecastData.list[i];
 
         const t = new Date(parseInt(fData.dt * 1000));
         const humanDateFormat = t.toLocaleString("en-US", {
           month: "short",
-          day: "numeric",
-        });
-        const day = t.toLocaleString("en-US", {
           day: "numeric",
         });
         const hour = t.toLocaleString("en-US", {
@@ -144,7 +128,7 @@ function App() {
       const transformedForecast = [
         {
           name: currentData.name,
-          currentTime: currentData.time,
+          currentTime: currentTime,
           feels_like: Math.trunc(currentData.main.feels_like),
           temp: Math.trunc(currentData.main.temp),
           humidity: Math.trunc(currentData.main.humidity),
@@ -152,14 +136,13 @@ function App() {
           days: transformedDays,
         },
       ];
-      console.log(time);
-      console.log(temp);
-      setChart({
-        chartLabels: time,
-        chartData: temp,
-        chartMin: Math.min(...temp),
-        chartMax: Math.max(...temp),
-      });
+        setChart({
+          chartLabels: time,
+          chartData: temp,
+          chartMin: Math.min(...temp),
+          chartMax: Math.max(...temp),
+        });
+
       setForecast(transformedForecast);
 
       if (!currentData.ok || !forecastData.ok) {
@@ -262,6 +245,7 @@ function App() {
         <CityForm onSubmitHandler={addCityHandler} />
         {content}
       </section>
+      <a href="https://github.com/mistasp0ck/weather-forecast" target="_blank" rel="noreferrer" className="repo">Github</a>
     </div>
   );
 }

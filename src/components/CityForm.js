@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import styles from "./CityForm.module.css";
 
 
@@ -8,7 +8,6 @@ const CityForm = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
     const enteredCity = cityInputRef.current.value;
-    // props.onAddMovie(movie);
     props.onSubmitHandler(enteredCity);
   };
 
@@ -25,13 +24,6 @@ const CityForm = (props) => {
           />
         </div>
       </form>
-      {/* {error && (
-        <ErrorModal
-          title={error.title}
-          message={error.message}
-          onConfirm={errorHandler}
-        ></ErrorModal>
-      )} */}
     </>
   );
 };

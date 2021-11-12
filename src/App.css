@@ -1,7 +1,8 @@
 .App {
   text-align: center;
   /* padding: 15px; */
-  /* width: 100%; */
+  /* width: 100%; */    
+
 }
 @media (min-width: 768px) {
   .App {
@@ -10,16 +11,17 @@
     right: 0;
     bottom: 0;
     left: 0;
-    display: flex;
     align-items: center;
     justify-content: center;
     padding: 0px;
+    display: flex;
   }
 }
 .chart-container {
   /* width: 100%; */
   position: relative;
-  display: none;
+  /* display: none; */
+  display: block;
 }
 @media (min-width:768px) {
   .chart-container {
@@ -33,11 +35,21 @@ body {
   font-family: "Ubuntu", sans-serif;
 }
 .repo {
-  float: right;
   margin-right: 15px;
   margin-bottom: 15px;
   color: #522bff;
   text-decoration: none;
+  display: flex;
+  justify-self: flex-end;
+  align-self: flex-end;
+  margin-top: 15px;
+  float: right;
+}
+@media (min-width: 768px) {
+  .repo {
+    position: absolute;
+    right: 0;
+  }
 }
 
 .App-logo {
@@ -58,22 +70,22 @@ body {
   /* width: 100%; */
   /* padding: 28px 15px;
    */
-   padding: 15px 10px;
+  padding: 15px 10px;
   box-shadow: 3px 3px 0 0 rgba(85, 150, 246, 0.16);
   border-radius: 9px;
+  margin-bottom: 20px;
 }
 
 @media (min-width: 768px) {
   .main {
     background-color: #fff;
     margin: 0 auto;
-    margin: 10vw 15px;
+    margin: calc(15px + 10vw) 15px;
     display: flex;
     width: 100%;
     flex-direction: column;
     justify-content: center;
     font-size: calc(10px + 2vmin);
-    margin: 10vw auto;
     max-width: 965px;
     padding: 38px 30px;
     box-shadow: 3px 3px 0 0 rgba(85, 150, 246, 0.16);
@@ -173,6 +185,10 @@ h4 {
   justify-content: center;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+}
+.right-widget-inner {
+  width: 100%;
 }
 @media (min-width: 768px) {
   .right-widget {

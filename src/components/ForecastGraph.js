@@ -4,8 +4,13 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 
 const ForecastGraph = (props) => {
   const options = {
-    responsive: true,
-    // maintainAspectRatio: true,
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 20,
+        right: 0
+      },
+    },
     plugins: {
       legend: {
         display: false,
@@ -25,7 +30,7 @@ const ForecastGraph = (props) => {
         },
         display: function (context, i) {
           return (
-            context.dataIndex > 0 &&
+            !(context.dataIndex % 2) &&
             context.dataIndex < context.dataset.data.length - 1
           );
         },
@@ -40,16 +45,14 @@ const ForecastGraph = (props) => {
       },
     },
     scales: {
-      
       x: {
         position: "top",
         gridLines: {
           offsetGridLines: true,
         },
-        // point: {
-        //   color: "green",
-        // },
         ticks: {
+          autoSkip: true,
+          maxTicksLimit: 5,
           color: "#1C1C1C",
           align: "left",
           backdropPadding: "20",
@@ -70,8 +73,8 @@ const ForecastGraph = (props) => {
         },
       },
       y: {
-        suggestedMin:  (props.chartMin) ? props.chartMin  - 5 : 0,
-        suggestedMax: (props.chartMax) ? props.chartMax +10 : 100,
+        suggestedMin: props.chartMin ? props.chartMin - 5 : 0,
+        suggestedMax: props.chartMax ? props.chartMax + 10 : 100,
         ticks: {
           display: false,
           beginAtZero: true,
@@ -98,11 +101,11 @@ const ForecastGraph = (props) => {
             borderColor: "#522BFF",
             fill: true,
             backgroundColor: "#EFECFF",
-            pointRadius: 7,
+            pointRadius: [7,0,7,0,7,0],
             pointHoverRadius: 7.1,
-            pointBackgroundColor: '#522BFF',
+            pointBackgroundColor: "#522BFF",
             pointBorderColor: "white",
-            pointBorderWidth: "3"
+            pointBorderWidth: "3",
           },
         ],
       }}

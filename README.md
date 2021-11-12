@@ -1,5 +1,7 @@
 # Weather Forecast App using React.js and Chart.js
 
+Demo: [weatherfeels.com] (https://weatherfeels.com)
+
 To install run:
 ### `npm install`
 Signup for a free api key at https://openweathermap.org and rename the `secrets_sample.json` file.  Add the API key to the  `openWeatherAPI` value.
